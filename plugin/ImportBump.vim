@@ -36,13 +36,28 @@ endfunction
 
 " Find the last import at the top of the file
 function! s:FindLastImport()
-  echo "last"
-  return "last"
+  let curr = 1
+  let lastLineFound = 0
+  let done = 0
+
+  while curr <= line('$') && !done
+    let line = getline(curr)
+    if line =~ "^import"
+      "echo line
+      let lastLineFound = curr
+    endif
+    if line =~ "^class" || line =~ "^object"
+      let done = 1
+    endif
+    let curr = curr + 1
+  endwhile
+
+  return lastLineFound
 endfunction
 
 function! s:BumpImport() 
-  echo "bump"
-  return "bump"
+  let lineOfLastImport = s:FindLastImport()
+  echo lineOfLastImport
 endfunction
 
 
