@@ -10,30 +10,6 @@ if !exists('g:move_map_keys')
   let g:move_map_keys = 1
 endif
 
-
-
-function! s:MoveLineUp(count) range
-  let distance = a:count + 1
-
-  if v:count > 0
-    let distance = distance + v:count - 1
-  endif
-
-  if (line('.') - distance) < 0
-    execute 'silent m 0'
-    if (g:move_auto_indent == 1)
-      normal! ==
-    endif
-    return
-  endif
-
-  execute 'silent m-' . distance
-
-  if (g:move_auto_indent == 1)
-    normal! ==
-  endif
-endfunction
-
 " Find the last import at the top of the file
 function! s:FindLastImport()
   let curr = 1
@@ -56,10 +32,17 @@ function! s:FindLastImport()
 endfunction
 
 function! s:BumpImport() 
-  let lineOfLastImport = s:FindLastImport()
-  echo lineOfLastImport
+  if getline(".") =~ "import"
+    let currentLine = line(".")
+    let lineOfLastImport = s:FindLastImport()
+    
+    " Move to line after lineOfLastImport
+    execute "silent m " . lineOfLastImport
+    call cursor(currentLine, 0) 
+  else
+    echo "You can only push import statements"
+  endif
 endfunction
-
 
 
 nnoremap <silent> <Plug>BumpImport   :call <SID>BumpImport()<CR>
