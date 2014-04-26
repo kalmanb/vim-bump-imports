@@ -34,6 +34,11 @@ endfunction
 function! s:BumpImport() 
   if getline(".") =~ "import"
     let currentLine = line(".")
+    
+    " Remove leading white space
+    let clean = substitute(getline('.'), '^\s*\(.\{-}\)\s*$', '\1', '')
+    call setline('.', clean)
+    
     let lineOfLastImport = s:FindLastImport()
     
     " Move to line after lineOfLastImport
