@@ -1,13 +1,15 @@
 scriptencoding utf-8
 
 " check if script is already loaded
-if exists("g:loaded_bump_imports") || &cp
+if exists("g:loaded_bump-imports")
   finish "stop loading the script"
 endif
 let g:loaded_bump_imports = 1
 
-if !exists('g:move_map_keys')
-  let g:move_map_keys = 1
+" To disable default key bindings, add the following to you ~/.vimrc
+" let g:bump_imports_use_default_keymappings = 0
+if !exists('g:bump_imports_use_default_keymappings')
+  let g:bump_imports_use_default_keymappings = 1
 endif
 
 " Find the last import at the top of the file
@@ -51,7 +53,6 @@ endfunction
 
 
 nnoremap <silent> <Plug>BumpImport   :call <SID>BumpImport()<CR>
-
-if g:move_map_keys
+if g:bump_imports_use_default_keymappings
   execute 'nmap <Leader>oo <Plug>BumpImport'
 endif
