@@ -24,7 +24,7 @@ function! s:FindLastImport()
       "echo line
       let lastLineFound = curr
     endif
-    if line =~ "^class" || line =~ "^object"
+    if line =~ "^class" || line =~ "^object" || line =~ "^trait" || line =~ "^package object"
       let done = 1
     endif
     let curr = curr + 1
