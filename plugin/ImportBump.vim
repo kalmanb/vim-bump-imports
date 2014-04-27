@@ -1,10 +1,10 @@
 scriptencoding utf-8
 
 " check if script is already loaded
-if exists("g:loaded_ImportBump")
+if exists("g:loaded_bump_imports") || &cp
   finish "stop loading the script"
 endif
-let g:loaded_ImportBump = 1
+let g:loaded_bump_imports = 1
 
 if !exists('g:move_map_keys')
   let g:move_map_keys = 1
